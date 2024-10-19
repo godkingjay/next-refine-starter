@@ -11,28 +11,32 @@ import { DevtoolsProvider } from "./devtools";
 import { HotToastProvider } from "./hot-toast-provider";
 
 type ProvidersProps = {
-  children: React.ReactNode;
+    children: React.ReactNode;
 };
 
 const Providers = (props: ProvidersProps) => {
-  return (
-    <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
-      <RefineKbarProvider>
-        <DevtoolsProvider>
-          <TooltipProvider>{props.children}</TooltipProvider>
-          <Toaster />
-          <SonnToaster />
-          <HotToastProvider />
-        </DevtoolsProvider>
-      </RefineKbarProvider>
-      <AppProgressBar
-        height="4px"
-        color="#e11d48"
-        options={{ showSpinner: false }}
-        shallowRouting
-      />
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider
+            attribute="class"
+            enableSystem={false}
+            defaultTheme="light"
+        >
+            <RefineKbarProvider>
+                <DevtoolsProvider>
+                    <TooltipProvider>{props.children}</TooltipProvider>
+                    <Toaster />
+                    <SonnToaster />
+                    <HotToastProvider />
+                </DevtoolsProvider>
+            </RefineKbarProvider>
+            <AppProgressBar
+                height="4px"
+                color="#e11d48"
+                options={{ showSpinner: false }}
+                shallowRouting
+            />
+        </ThemeProvider>
+    );
 };
 
 export default Providers;
