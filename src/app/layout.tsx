@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import React, { Suspense } from "react";
 
+import { cn } from "@lib";
 import { authProvider } from "@providers/auth-provider";
 import { dataProvider } from "@providers/data-provider";
 import Providers from "@providers/providers";
@@ -30,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body className={cn(font.className, "theme-blue")}>
         <Suspense>
           {/* <GitHubBanner /> */}
           <Providers>
