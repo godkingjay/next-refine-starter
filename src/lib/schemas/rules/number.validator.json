@@ -1,0 +1,54 @@
+{
+    "duplicate": {
+        "value": true,
+        "message": "Number is already in use",
+        "customMessage": "{name} is already in use"
+    },
+    "min": {
+        "value": -2147483648,
+        "message": "Number must be at least -2147483648",
+        "customMessage": "{name} must be at least {min}"
+    },
+    "max": {
+        "value": 2147483647,
+        "message": "Number must be less than 2147483647",
+        "customMessage": "{name} must be less than or {max}"
+    },
+    "range": {
+        "value": true,
+        "message": "Number must be between -2147483648 and 2147483647",
+        "customMessage": "{name} must be between {min} and {max}"
+    },
+    "required": {
+        "value": true,
+        "message": "Number is required",
+        "customMessage": "{name} is required"
+    },
+    "regex": {
+        "value": "^\\d+$",
+        "flags": "i",
+        "message": "Number is invalid",
+        "customMessage": "{name} is invalid"
+    },
+    "valid": {
+        "value": true,
+        "message": "Number is invalid",
+        "customMessage": "{name} is invalid"
+    },
+    "replace": {
+        "values": {
+            "name": {
+                "variable": "{name}",
+                "default": "Number"
+            },
+            "min": {
+                "variable": "{min}",
+                "default": -2147483648
+            },
+            "max": {
+                "variable": "{max}",
+                "default": 2147483647
+            }
+        }
+    }
+}

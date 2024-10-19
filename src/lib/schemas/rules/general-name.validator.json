@@ -1,0 +1,49 @@
+{
+    "duplicate": {
+        "value": true,
+        "message": "Email is already in use",
+        "customMessage": "{name} is already in use"
+    },
+    "min": {
+        "value": 8,
+        "message": "Email must be at least 8 characters long",
+        "customMessage": "{name} must be at least {min} characters long"
+    },
+    "max": {
+        "value": 256,
+        "message": "Email must be less than 256 characters long",
+        "customMessage": "{name} must be less than {max} characters long"
+    },
+    "regex": {
+        "value": "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$",
+        "flags": "i",
+        "message": "Email must be a valid email (ex: email@domain.com)",
+        "customMessage": "{name} must be a valid email (ex: email@domain.com)"
+    },
+    "required": {
+        "value": true,
+        "message": "Email is required",
+        "customMessage": "{name} is required"
+    },
+    "valid": {
+        "value": true,
+        "message": "Email must be a valid email (ex: email@domain.com)",
+        "customMessage": "{name} must be a valid email (ex: email@domain.com)"
+    },
+    "replace": {
+        "values": {
+            "name": {
+                "variable": "{name}",
+                "default": "Email"
+            },
+            "min": {
+                "variable": "{min}",
+                "default": 8
+            },
+            "max": {
+                "variable": "{max}",
+                "default": 256
+            }
+        }
+    }
+}
