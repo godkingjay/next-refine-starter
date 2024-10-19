@@ -1,3 +1,4 @@
-export * from './data-provider';
-export * from './use-media-query';
-export * from './use-toast';
+export * from "usehooks-ts";
+
+export * from "./data-provider";
+export * from "./use-toast";
