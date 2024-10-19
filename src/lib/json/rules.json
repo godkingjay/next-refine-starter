@@ -1,0 +1,29 @@
+{
+    "replace": {
+        "code": {
+            "isLowerCase": true,
+            "rules": [
+                {
+                    "regex": "[’'(),]",
+                    "flags": "g",
+                    "replacement": ""
+                },
+                {
+                    "regex": "/",
+                    "flags": "g",
+                    "replacement": " or "
+                },
+                {
+                    "regex": "-",
+                    "flags": "g",
+                    "replacement": " "
+                },
+                {
+                    "regex": "\\s+",
+                    "flags": "g",
+                    "replacement": "-"
+                }
+            ]
+        }
+    }
+}
