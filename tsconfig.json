@@ -1,29 +1,30 @@
 {
-	"compilerOptions": {
-		"target": "es5",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
-		"skipLibCheck": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"esModuleInterop": true,
-		"module": "esnext",
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"jsx": "preserve",
-		"plugins": [
-			{
-				"name": "next"
-			}
-		],
-		"paths": {
-			"@*": ["./src/*"],
-			"@pages/*": ["./pages/*"]
-		},
-		"incremental": true,
-		"noEmit": true
-	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-	"exclude": ["node_modules"]
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "resolveJsonModule": true,
+        "emitDeclarationOnly": false,
+        "moduleResolution": "node",
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ],
+        "paths": {
+            "@*": ["./src/*"],
+            "@pages/*": ["./pages/*"]
+        },
+        "incremental": true,
+        "noEmit": true
+    },
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    "exclude": ["node_modules"]
 }
