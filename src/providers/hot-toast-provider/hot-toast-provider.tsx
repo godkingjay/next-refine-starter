@@ -148,12 +148,16 @@ export const HotToastProvider = () => {
             )}
           >
             <CardContent className="mx-4 my-3 p-0">
-              <div className="flex flex-row items-center gap-0">
-                {renderIcon()}
-                <p className="flex flex-col whitespace-pre-wrap break-words">
-                  {toast.message as React.ReactNode}
-                </p>
-              </div>
+              {toast.type === "custom" ? (
+                (toast.message as React.ReactNode)
+              ) : (
+                <div className="flex flex-row items-center gap-0">
+                  {renderIcon()}
+                  <p className="flex flex-col whitespace-pre-wrap break-words">
+                    {toast.message as React.ReactNode}
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
         );
