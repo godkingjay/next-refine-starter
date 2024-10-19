@@ -1,3 +1,3 @@
-export * from "./paginator";
-export * from "./types";
-export * from "./utility";
+export * from "./paginator.types";
+export * from "./theme.types";
+export * from "./utility.types";
