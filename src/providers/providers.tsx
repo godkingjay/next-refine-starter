@@ -1,13 +1,14 @@
 "use client";
 
+import { SonnToaster } from "@components/ui/sonner";
+import { Toaster } from "@components/ui/toaster";
+import { TooltipProvider } from "@components/ui/tooltip";
 import { RefineKbarProvider } from "@refinedev/kbar";
+import { AppProgressBar } from "next-nprogress-bar";
+import { ThemeProvider } from "next-themes";
 import React from "react";
 import { DevtoolsProvider } from "./devtools";
-import { ThemeProvider } from "next-themes";
-import { TooltipProvider } from "@components/ui/tooltip";
-import { Toaster } from "@components/ui/toaster";
-import { AppProgressBar } from "next-nprogress-bar";
-import { SonnToaster } from "@components/ui/sonner";
+import { HotToastProvider } from "./hot-toast-provider";
 
 type ProvidersProps = {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ const Providers = (props: ProvidersProps) => {
           <TooltipProvider>{props.children}</TooltipProvider>
           <Toaster />
           <SonnToaster />
+          <HotToastProvider />
         </DevtoolsProvider>
       </RefineKbarProvider>
       <AppProgressBar

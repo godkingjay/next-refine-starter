@@ -1,52 +1,106 @@
 "use client";
 
-import type { AuthProvider } from "@refinedev/core";
+import ApiService from "@lib/api-service";
+import { AuthBindings } from "@refinedev/core";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
-import { LoginResponse } from "./types";
+import { LoginResponse, RegisterParams } from "./types";
 
-const mockUsers = [
-  {
-    name: "John Doe",
-    email: "johndoe@mail.com",
-    roles: ["admin"],
-    avatar: "https://i.pravatar.cc/150?img=1",
+export const getAuthToken = () => {
+  const auth = Cookies.get("auth");
+  if (auth) {
+    let parsedAuth = JSON.parse(auth) as LoginResponse;
+    return parsedAuth.token;
+  }
+
+  return "";
+};
+
+export const authProvider: AuthBindings = {
+  register: async (params: RegisterParams) => {
+    const res = await ApiService.post<LoginResponse>("/api/v1/signup", params)
+      .then(() => {
+        return {
+          success: true,
+        };
+      })
+      .catch((e) => {
+        return {
+          success: false,
+          error: e?.response?.data,
+        };
+      });
+
+    console.log(res);
+
+    return res;
   },
-  {
-    name: "Jane Doe",
-    email: "janedoe@mail.com",
-    roles: ["editor"],
-    avatar: "https://i.pravatar.cc/150?img=1",
-  },
-];
+  login: async ({ email, password, remember }) => {
+    const res = await ApiService.post<any, AxiosResponse<LoginResponse>>(
+      "/api/login",
+      {
+        email,
+        password,
+      }
+    ).catch((e) => {
+      return e;
+    });
 
-export const authProvider: AuthProvider = {
-  login: async ({ email, username, password, remember }) => {
-    // Suppose we actually send a request to the back end here.
-    const user = mockUsers[0];
-
-    console.log(user);
+    const user = res.data;
 
     if (user) {
       Cookies.set("auth", JSON.stringify(user), {
-        expires: 30, // 30 days
+        expires: 2,
         path: "/",
       });
+
+      let redirectTo = "/";
+
+      // TODO redirect based on roles
+      // if (
+      //   (user as LoginResponse).roles.includes("admin") ||
+      //   (user as LoginResponse).roles.includes("super-admin")
+      // ) {
+      //   redirectTo = "/admin";
+      // }
       return {
         success: true,
-        redirectTo: "/",
+        redirectTo,
       };
     }
 
     return {
       success: false,
       error: {
-        name: "LoginError",
-        message: "Invalid username or password",
+        name: "Login Error",
+        message: "Invalid credentials",
       },
     };
   },
-  logout: async () => {
-    Cookies.remove("auth", { path: "/" });
+  logout: async ({ redirectPath }: { redirectPath: string }) => {
+    const auth = Cookies.get("auth");
+    if (auth) {
+      let parsedAuth = JSON.parse(auth) as LoginResponse;
+      const res = await ApiService.post("/api/logout", {}, {
+        headers: {
+          Authorization: "Bearer " + parsedAuth.token,
+        },
+      } as AxiosRequestConfig).catch((e) => {
+        if (e.status === 401) {
+          Cookies.remove("auth", { path: "/" });
+        }
+        return e;
+      });
+
+      if (res.status == 200) {
+        Cookies.remove("auth", { path: "/" });
+        return {
+          success: true,
+          redirectTo: redirectPath ?? "/",
+        };
+      }
+    }
+
     return {
       success: true,
       redirectTo: "/login",
@@ -69,20 +123,23 @@ export const authProvider: AuthProvider = {
   getPermissions: async () => {
     const auth = Cookies.get("auth");
     if (auth) {
-      const parsedUser = JSON.parse(auth);
-      return parsedUser.roles;
+      const parsedUser = JSON.parse(auth) as LoginResponse;
+      return {
+        role: [], //parsedUser.roles,
+        permissions: [], // parsedUser.permissions,
+      };
     }
     return null;
   },
   getIdentity: async () => {
     const auth = Cookies.get("auth");
     if (auth) {
-      const parsedUser = JSON.parse(auth);
-      return parsedUser;
+      return JSON.parse(auth) as LoginResponse;
     }
     return null;
   },
   onError: async (error) => {
+    console.log("on error", error);
     if (error.response?.status === 401) {
       return {
         logout: true,
@@ -91,14 +148,4 @@ export const authProvider: AuthProvider = {
 
     return { error };
   },
-};
-
-export const getAuthToken = () => {
-  const auth = Cookies.get("auth");
-  if (auth) {
-    let parsedAuth = JSON.parse(auth) as LoginResponse;
-    return parsedAuth.token;
-  }
-
-  return "";
 };

@@ -1,4 +1,6 @@
+import { ActionLoadingText } from "@components/texts";
 import { Button } from "@components/ui/button";
+import { Card, CardContent } from "@components/ui/card";
 import { Checkbox } from "@components/ui/checkbox";
 import { Input } from "@components/ui/input";
 import { Label } from "@components/ui/label";
@@ -6,12 +8,10 @@ import { useMediaQuery } from "@hooks/utilities";
 import { Icon } from "@iconify/react";
 import { cn } from "@lib";
 import { useLogin } from "@refinedev/core";
-import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { CustomAuthPageProps } from ".";
-import { Card, CardContent } from "@components/ui/card";
 
 type AuthLoginProps = CustomAuthPageProps & {
   type: "login";
@@ -150,10 +150,14 @@ const AuthLogin = (props: AuthLoginProps) => {
               </Link>
             </div>
             <Button className="mt-5 w-full" disabled={isLoading}>
-              {isLoading && (
-                <Loader2 className="h-4 w-4 animate-spin ltr:mr-2 rtl:ml-2" />
-              )}
-              {isLoading ? "Loading..." : "Sign In"}
+              <ActionLoadingText
+                hideLoadIcon
+                isLoading={isLoading}
+                labels={{
+                  load: "Sign In",
+                  loading: "Signing In...",
+                }}
+              />
             </Button>
           </form>
         </div>

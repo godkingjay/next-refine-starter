@@ -1,5 +1,4 @@
 import { Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
 const config: Config = {
@@ -89,9 +88,6 @@ const config: Config = {
           from: { opacity: "0", transform: "translateX(-2px)" },
           to: { opacity: "1", transform: "translateX(0)" },
         },
-      },
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
