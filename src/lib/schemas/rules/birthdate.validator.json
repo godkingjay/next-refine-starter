@@ -1,0 +1,58 @@
+{
+    "duplicate": {
+        "value": true,
+        "message": "Birthdate is already in use",
+        "customMessage": "{name} is already in use"
+    },
+    "min": {
+        "value": 18,
+        "message": "Birthdate must be at least 18 years old",
+        "customMessage": "{name} must be at least {min} years old"
+    },
+    "max": {
+        "value": 120,
+        "message": "Birthdate must be less than 120 years old",
+        "customMessage": "{name} must be less than {max} years old"
+    },
+    "minMax": {
+        "value": 120,
+        "message": "Birthdate must be between 18 and 120 years old",
+        "customMessage": "{name} must be between {min} and {max} years old"
+    },
+    "required": {
+        "value": true,
+        "message": "Birthdate is required",
+        "customMessage": "{name} is required"
+    },
+    "regex": {
+        "value": "^\\d{4}-\\d{2}-\\d{2}",
+        "flags": "i",
+        "message": "Birthdate must follow this format: YYYY-MM-DD",
+        "customMessage": "{name} must follow this format: {format}"
+    },
+    "valid": {
+        "value": true,
+        "message": "Birthdate must be a valid date",
+        "customMessage": "{name} must be a valid date"
+    },
+    "replace": {
+        "values": {
+            "name": {
+                "variable": "{name}",
+                "default": "Birthdate"
+            },
+            "min": {
+                "variable": "{min}",
+                "default": 18
+            },
+            "max": {
+                "variable": "{max}",
+                "default": 120
+            },
+            "format": {
+                "variable": "{format}",
+                "default": "YYYY-MM-DD"
+            }
+        }
+    }
+}

@@ -1,0 +1,55 @@
+{
+    "duplicate": {
+        "value": true,
+        "message": "Gender is already in use",
+        "customMessage": "{name} is already in use"
+    },
+    "values": {
+        "message": "Gender must be one of the following: male, female, other, or prefer not to say",
+        "customMessage": "{name} must be one of the following: {choices}",
+        "choices": [
+            {
+                "id": "Male",
+                "name": "Male",
+                "value": "Male"
+            },
+            {
+                "id": "Female",
+                "name": "Female",
+                "value": "Female"
+            },
+            {
+                "id": "Other",
+                "name": "Other",
+                "value": "Other"
+            },
+            {
+                "id": "Prefer not to say",
+                "name": "Prefer not to say",
+                "value": "Prefer not to say"
+            }
+        ]
+    },
+    "required": {
+        "value": true,
+        "message": "Gender is required",
+        "customMessage": "{name} is required"
+    },
+    "valid": {
+        "valid": true,
+        "message": "Gender must be a valid gender",
+        "customMessage": "{name} is not valid"
+    },
+    "replace": {
+        "values": {
+            "name": {
+                "variable": "{name}",
+                "default": "Gender"
+            },
+            "choices": {
+                "variable": "{choices}",
+                "default": "male, female, other, or prefer not to say"
+            }
+        }
+    }
+}

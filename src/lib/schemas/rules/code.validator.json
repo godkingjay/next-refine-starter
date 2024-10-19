@@ -1,0 +1,49 @@
+{
+    "duplicate": {
+        "value": true,
+        "message": "Code is already in use",
+        "customMessage": "{name} is already in use"
+    },
+    "min": {
+        "value": 2,
+        "message": "Code must be at least 2 characters long",
+        "customMessage": "{name} must be at least {min} characters long"
+    },
+    "max": {
+        "value": 256,
+        "message": "Code must be less than 256 characters long",
+        "customMessage": "{name} must be less than {max} characters long"
+    },
+    "required": {
+        "value": true,
+        "message": "Code is required",
+        "customMessage": "{name} is required"
+    },
+    "regex": {
+        "value": "^(?=.*[\\p{L}\\p{N}])(^[\\p{L}\\p{N}]+([\\s_-]{0,1}[\\p{L}\\p{N}]+)*)*$",
+        "flags": "iu",
+        "message": "Code is invalid",
+        "customMessage": "{name} is invalid"
+    },
+    "valid": {
+        "value": true,
+        "message": "Code is invalid",
+        "customMessage": "{name} is invalid"
+    },
+    "replace": {
+        "values": {
+            "name": {
+                "variable": "{name}",
+                "default": "Code"
+            },
+            "min": {
+                "variable": "{min}",
+                "default": 2
+            },
+            "max": {
+                "variable": "{max}",
+                "default": 256
+            }
+        }
+    }
+}

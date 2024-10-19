@@ -1,0 +1,69 @@
+{
+    "duplicate": {
+        "value": true,
+        "message": "Username is already in use",
+        "customMessage": "{name} is already in use"
+    },
+    "min": {
+        "value": 3,
+        "message": "Username must be at least 3 characters long",
+        "customMessage": "{name} must be at least {min} characters long"
+    },
+    "max": {
+        "value": 32,
+        "message": "Username must be less than 32 characters long",
+        "customMessage": "{name} must be less than {max} characters long"
+    },
+    "required": {
+        "value": true,
+        "message": "Username is required",
+        "customMessage": "{name} is required"
+    },
+    "regex": {
+        "value": "^[A-Za-z0-9\\-_.]+$",
+        "flags": "i",
+        "message": "Username must contain letters, numbers, -, and _ only",
+        "customMessage": "{name} must contain letters, numbers, -, and _ only"
+    },
+    "valid": {
+        "value": true,
+        "message": "Username is invalid",
+        "customMessage": "{name} is invalid"
+    },
+    "replace": {
+        "values": {
+            "name": {
+                "variable": "{name}",
+                "default": "Username"
+            },
+            "min": {
+                "variable": "{min}",
+                "default": 3
+            },
+            "max": {
+                "variable": "{max}",
+                "default": 32
+            }
+        },
+        "socials": {
+            "facebook": {
+                "username": "Facebook handle"
+            },
+            "x": {
+                "username": "X handle"
+            },
+            "instagram": {
+                "username": "Instagram handle"
+            },
+            "youtube": {
+                "username": "Youtube handle"
+            },
+            "linkedIn": {
+                "username": "LinkedIn handle"
+            },
+            "gitHub": {
+                "username": "GitHub handle"
+            }
+        }
+    }
+}

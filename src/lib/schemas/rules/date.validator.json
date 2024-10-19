@@ -1,0 +1,53 @@
+{
+    "duplicate": {
+        "value": true,
+        "message": "Date is already in use",
+        "customMessage": "{name} is already in use"
+    },
+    "minDate": {
+        "value": "2001-01-01",
+        "message": "Date must be at least 2001-01-01",
+        "customMessage": "{name} must be at least {minDate}"
+    },
+    "maxDate": {
+        "value": "2024-12-31",
+        "message": "Date must be less than 2024-12-31",
+        "customMessage": "{name} must be less than {maxDate}"
+    },
+    "required": {
+        "value": true,
+        "message": "Date is required",
+        "customMessage": "{name} is required"
+    },
+    "regex": {
+        "value": "^\\d{4}-\\d{2}-\\d{2}",
+        "flags": "i",
+        "message": "Date must follow this format: YYYY-MM-DD",
+        "customMessage": "{name} must follow this format: {format}"
+    },
+    "valid": {
+        "value": true,
+        "message": "Date must be a valid date",
+        "customMessage": "{name} must be a valid date"
+    },
+    "replace": {
+        "values": {
+            "name": {
+                "variable": "{name}",
+                "default": "Date"
+            },
+            "minDate": {
+                "variable": "{minDate}",
+                "default": "2001-01-01"
+            },
+            "maxDate": {
+                "variable": "{maxDate}",
+                "default": "2024-12-31"
+            },
+            "format": {
+                "variable": "{format}",
+                "default": "YYYY-MM-DD"
+            }
+        }
+    }
+}
