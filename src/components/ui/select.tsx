@@ -40,10 +40,11 @@ const selectVariants = cva(
       },
       radius: {
         none: "rounded-none",
-        sm: "rounded",
-        md: "rounded-lg",
-        lg: "rounded-xl",
-        xl: "rounded-[20px]",
+        sm: "rounded-sm",
+        base: "rounded",
+        md: "rounded-md",
+        lg: "rounded-lg",
+        xl: "rounded-xl",
       },
       size: {
         sm: "h-8 text-xs",
@@ -110,7 +111,7 @@ const selectVariants = cva(
       variant: "bordered",
       radius: "md",
     },
-  }
+  },
 );
 
 const Select = SelectPrimitive.Root;
@@ -147,20 +148,20 @@ const SelectTrigger = React.forwardRef<
       icon = <ChevronDown />,
       ...props
     },
-    ref
+    ref,
   ) => (
     <SelectPrimitive.Trigger
       ref={ref}
       className={cn(
         selectVariants({ color, size, radius, variant }),
-        className
+        className,
       )}
       {...props}
     >
       {children}
       <SelectPrimitive.Icon asChild>{icon}</SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
-  )
+  ),
 );
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
@@ -175,7 +176,7 @@ const SelectContent = React.forwardRef<
         "relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         position === "popper" &&
           "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-        className
+        className,
       )}
       position={position}
       {...props}
@@ -184,7 +185,7 @@ const SelectContent = React.forwardRef<
         className={cn(
           "p-1",
           position === "popper" &&
-            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
+            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]",
         )}
       >
         {children}
@@ -202,7 +203,7 @@ const SelectLabel = React.forwardRef<
     ref={ref}
     className={cn(
       "py-1.5 text-sm font-semibold ltr:pl-8 ltr:pr-2 rtl:pl-2 rtl:pr-8",
-      className
+      className,
     )}
     {...props}
   />
@@ -217,7 +218,7 @@ const SelectItem = React.forwardRef<
     ref={ref}
     className={cn(
       "relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className
+      className,
     )}
     {...props}
   >

@@ -27,10 +27,11 @@ const sliderVariants = cva(
 
       radius: {
         none: "rounded-none",
-        sm: "rounded",
-        md: "rounded-lg",
-        lg: "rounded-xl",
-        xl: "rounded-[20px]",
+        sm: "rounded-sm",
+        base: "rounded",
+        md: "rounded-md",
+        lg: "rounded-lg",
+        xl: "rounded-xl",
       },
       size: {
         sm: "h-1",
@@ -45,7 +46,7 @@ const sliderVariants = cva(
       size: "lg",
       radius: "md",
     },
-  }
+  },
 );
 
 interface SliderProps
@@ -73,7 +74,7 @@ const Slider = React.forwardRef<
       marks = [],
       ...props
     },
-    ref
+    ref,
   ) => {
     const { max = 100, min = 0 } = props;
     const steps = showSteps ? Math.floor((max - min) / step) + 1 : 0;
@@ -84,7 +85,7 @@ const Slider = React.forwardRef<
     const [mappedValues, setMappedValues] = React.useState(() =>
       props.defaultValue !== undefined
         ? [Math.round(props.defaultValue[0] ?? 0)]
-        : [0]
+        : [0],
     );
 
     const getStepProps = (index: number) => {
@@ -100,7 +101,7 @@ const Slider = React.forwardRef<
           "h-1.5 w-1.5 absolute rounded-full  bg-default-300/50  data-[in-range=true]:bg-background/70 top-1/2 -translate-x-1/2 -translate-y-1/2",
           {
             "h-1 w-1": size === "sm",
-          }
+          },
         ),
         "data-in-range": isInRange ? "true" : "false",
 
@@ -141,7 +142,7 @@ const Slider = React.forwardRef<
         >
           <SliderPrimitive.Track
             className={cn(
-              "relative h-full w-full grow overflow-hidden rounded-full bg-secondary [&>span]:bg-primary"
+              "relative h-full w-full grow overflow-hidden rounded-full bg-secondary [&>span]:bg-primary",
             )}
           >
             <SliderPrimitive.Range
@@ -190,7 +191,7 @@ const Slider = React.forwardRef<
         </SliderPrimitive.Root>
       </>
     );
-  }
+  },
 );
 Slider.displayName = SliderPrimitive.Root.displayName;
 

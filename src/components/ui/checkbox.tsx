@@ -35,7 +35,7 @@ const checkboxVariants = cva(
           "bg-default-200 border-current data-[state=checked]:bg-card",
       },
       radius: {
-        none: "",
+        none: "rounded-none",
         sm: "rounded-sm",
         base: "rounded",
         md: "rounded-md",
@@ -95,7 +95,7 @@ const checkboxVariants = cva(
       radius: "base",
       variant: "faded",
     },
-  }
+  },
 );
 
 type CheckboxProps = React.ComponentPropsWithoutRef<
@@ -122,7 +122,7 @@ const Checkbox = React.forwardRef<
       icon = <Check />,
       ...props
     },
-    ref
+    ref,
   ) => (
     <>
       {children ? (
@@ -131,7 +131,7 @@ const Checkbox = React.forwardRef<
             ref={ref}
             className={cn(
               checkboxVariants({ color, size, radius, variant }),
-              className
+              className,
             )}
             {...props}
           >
@@ -153,7 +153,7 @@ const Checkbox = React.forwardRef<
                 "text-[18px]": size === "xl",
                 "text-medium relative inline-flex select-none items-center justify-center before:absolute before:h-0.5 before:w-0 before:bg-foreground before:content-[''] peer-data-[state=checked]:opacity-60 peer-data-[state=checked]:before:w-full":
                   lineThrough,
-              }
+              },
             )}
           >
             {children}
@@ -164,7 +164,7 @@ const Checkbox = React.forwardRef<
           ref={ref}
           className={cn(
             checkboxVariants({ color, size, radius, variant }),
-            className
+            className,
           )}
           {...props}
         >
@@ -176,7 +176,7 @@ const Checkbox = React.forwardRef<
         </CheckboxPrimitive.Root>
       )}
     </>
-  )
+  ),
 );
 Checkbox.displayName = CheckboxPrimitive.Root.displayName;
 
