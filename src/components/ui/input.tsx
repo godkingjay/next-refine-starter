@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { ThemeVariants } from "@lib/config";
 import { InputColor, InputVariant, Radius, Shadow } from "@lib/types";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
@@ -29,22 +30,8 @@ export const inputVariants = cva(
         ghost: "border-0 focus:border",
         "flat-underline": "bg-default-100 border-b",
       },
-      shadow: {
-        none: "",
-        sm: "shadow-sm",
-        md: "shadow-md",
-        lg: "shadow-lg",
-        xl: "shadow-xl",
-        "2xl": "shadow-2xl",
-      },
-      radius: {
-        none: "rounded-none",
-        sm: "rounded-sm",
-        base: "rounded",
-        md: "rounded-md",
-        lg: "rounded-lg",
-        xl: "rounded-xl",
-      },
+      shadow: ThemeVariants.shadow,
+      radius: ThemeVariants.radius,
       size: {
         sm: "h-8 text-xs read-only:leading-8",
         md: "h-9 text-xs read-only:leading-9",

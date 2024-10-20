@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/react";
+import { ThemeVariants } from "@lib/config";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
@@ -17,6 +18,8 @@ const alertVariants = cva(
         destructive: "bg-destructive text-destructive-foreground ",
         dark: "bg-gray-950 text-slate-50 ",
       },
+      shadow: ThemeVariants.shadow,
+      radius: ThemeVariants.radius,
       variant: {
         outline: "border border-current bg-background ",
         soft: "text-current bg-opacity-10 border-current    ",
@@ -90,7 +93,7 @@ const alertVariants = cva(
     defaultVariants: {
       color: "default",
     },
-  }
+  },
 );
 
 // Define interface for variant props
@@ -108,7 +111,7 @@ type AlertProps = AlertVariantProps & AlertHTMLProps;
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   (
     { className, color, variant, dismissible, onDismiss, children, ...props },
-    ref
+    ref,
   ) => {
     const [dismissed, setDismissed] = React.useState(false);
 
@@ -135,7 +138,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         )}
       </div>
     ) : null;
-  }
+  },
 );
 Alert.displayName = "Alert";
 
@@ -147,7 +150,7 @@ const AlertTitle = React.forwardRef<
     ref={ref}
     className={cn(
       "mb-2 grow text-lg font-medium leading-none tracking-tight",
-      className
+      className,
     )}
     {...props}
   />

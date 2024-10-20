@@ -4,6 +4,7 @@ import { Check, ChevronDown } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { ThemeVariants } from "@lib/config";
 const selectVariants = cva(
   " w-full  px-3 h-10 text-sm flex [&>svg]:h-5 [&>svg]:w-5    justify-between items-center  read-only:bg-background  disabled:cursor-not-allowed disabled:opacity-50  transition duration-300 ",
   {
@@ -29,23 +30,8 @@ const selectVariants = cva(
         ghost: "border-0 focus:border",
         "flat-underline": "read-only:bg-default-100 border-b",
       },
-      shadow: {
-        none: "shadow-none",
-        xs: "shadow-sm",
-        sm: "shadow",
-        md: "shadow-md",
-        lg: "shadow-lg",
-        xl: "shadow-xl",
-        "2xl": "shadow-2xl",
-      },
-      radius: {
-        none: "rounded-none",
-        sm: "rounded-sm",
-        base: "rounded",
-        md: "rounded-md",
-        lg: "rounded-lg",
-        xl: "rounded-xl",
-      },
+      shadow: ThemeVariants.shadow,
+      radius: ThemeVariants.radius,
       size: {
         sm: "h-8 text-xs",
         md: "h-9 text-xs",

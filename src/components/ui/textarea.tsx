@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+import { ThemeVariants } from "@lib/config";
 import { Radius, Shadow, TextAreaColor, TextAreaVariant } from "@lib/types";
 import { cva, type VariantProps } from "class-variance-authority";
 
@@ -30,22 +31,8 @@ export const textareaVariants = cva(
         ghost: "border-0 focus:border",
         "flat-underline": "bg-default-100 border-b",
       },
-      shadow: {
-        none: "",
-        sm: "shadow-sm",
-        md: "shadow-md",
-        lg: "shadow-lg",
-        xl: "shadow-xl",
-        "2xl": "shadow-2xl",
-      },
-      radius: {
-        none: "rounded-none",
-        sm: "rounded-sm",
-        base: "rounded",
-        md: "rounded-md",
-        lg: "rounded-lg",
-        xl: "rounded-xl",
-      },
+      shadow: ThemeVariants.shadow,
+      radius: ThemeVariants.radius,
     },
     compoundVariants: [
       {

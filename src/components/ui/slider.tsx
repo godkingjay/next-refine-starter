@@ -5,6 +5,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { ThemeVariants } from "@lib/config";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
@@ -24,15 +25,7 @@ const sliderVariants = cva(
           "[&_.range]:bg-destructive [&_.range-thumb]:border-secondary [&_.range-thumb]:drop-shadow-sm [&_.range-thumb]:bg-destructive  focus-visible:[&_.range-thumb]:bg-destructive",
         dark: "[&_.range]:bg-default-950 [&_.range-thumb]:border-secondary [&_.range-thumb]:drop-shadow-sm [&_.range-thumb]:bg-default-950  focus-visible:[&_.range-thumb]:bg-default-950",
       },
-
-      radius: {
-        none: "rounded-none",
-        sm: "rounded-sm",
-        base: "rounded",
-        md: "rounded-md",
-        lg: "rounded-lg",
-        xl: "rounded-xl",
-      },
+      radius: ThemeVariants.radius,
       size: {
         sm: "h-1",
         md: "h-1.5",
@@ -40,7 +33,6 @@ const sliderVariants = cva(
         xl: "h-3 ",
       },
     },
-
     defaultVariants: {
       color: "primary",
       size: "lg",
