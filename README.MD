@@ -20,19 +20,229 @@ Refine's hooks and components simplifies the development process and eliminates 
 ### Running the development server.
 
 ```bash
-    npm run dev
+    pnpm dev
 ```
 
 ### Building for production.
 
 ```bash
-    npm run build
+    pnpm build
 ```
 
 ### Running the production server.
 
 ```bash
-    npm run start
+    pnpm start
+```
+
+## Sample API Calls
+
+### POST Method
+
+```ts
+export const useDealerCreate = () => {
+  return useCustomCreate<
+    CreateDealerPayload,
+    CreateDealerResponse,
+    BaseApiErrorResponse
+  >("/api/accounts/dealer");
+};
+```
+
+#### Usage
+
+```ts
+const createDealer = useDealerCreate();
+
+const { handleMutate: handleCreateDealer } = createDealer;
+
+const onSubmit = () => {
+    const basePayload = {
+        first_name: "John",
+        last_name: "John",
+        email: "johndoe@example.com",
+        username: "john",
+        password: "password",
+    };
+
+    handleCreateDealer(
+        {
+            ...basePayload,
+        },
+        {
+            onSuccess: (data) => {
+                const successMessage = 
+                    data?.data?.message ?? 
+                    "Dealer created successfully."
+
+                console.log(successMessage);
+            },
+            onError: (error) => {
+                const errorMessage =
+                    error?.response?.data?.message ??
+                    "An error occurred while creating the dealer.";
+
+                console.error(errorMessage)
+            },
+        }
+    );
+}
+```
+
+### PUT Method
+
+```ts
+export const useDealerUpdate = () => {
+  return useCustomUpdate<
+    UpdateDealerPayload,
+    UpdateDealerResponse,
+    BaseApiErrorResponse
+  >("/api/accounts/dealer");
+};
+```
+
+#### Usage
+
+```ts
+const [dealerId, setDealerId] = useState<string | number>(0);
+const updateDealer = useDealerUpdate();
+
+const { handleMutate: handleUpdateDealer } = updateDealer;
+
+const onSubmit = () => {
+    const basePayload = {
+        first_name: "John",
+        last_name: "John",
+        email: "johndoe@example.com",
+        username: "john",
+    };
+
+    handleUpdateDealer(
+        String(dealerId),
+        {
+            ...basePayload,
+        },
+        {
+            onSuccess: (data) => {
+                const successMessage = 
+                    data?.data?.message ?? 
+                    "Dealer updated successfully."
+
+                console.log(successMessage);
+            },
+            onError: (error) => {
+                const errorMessage =
+                    error?.response?.data?.message ??
+                    "An error occurred while updating the dealer.";
+
+                console.error(errorMessage)
+            },
+        }
+    );
+}
+```
+
+### DELETE Method
+
+```ts
+export const useDealerDelete = () => {
+  return useCustomDelete<DeleteDealerResponse, BaseApiErrorResponse>(
+    "/api/accounts/dealers"
+  );
+};
+```
+
+#### Usage
+
+```ts
+const [dealerId, setDealerId] = useState<string | number>(0);
+const deleteDealer = useDealerDelete();
+
+const { handleMutate: handleDeleteDealer } = deleteDealer;
+
+const onDelete = () => {
+    handleDeleteDealer(String(dealerId), {
+        onSuccess: (data) => {
+            const successMessage = 
+                data?.data?.message ?? 
+                "Dealer deleted successfully."
+
+            console.log(successMessage);
+        },
+        onError: (error) => {
+            const errorMessage =
+                error?.response?.data?.message ??
+                "An error occurred while deleting the dealer.";
+
+            console.error(errorMessage)
+        },
+    });
+}
+```
+
+### GET Method
+
+```ts
+export const useDealerList = (props?: useDealerListProps) => {
+  return useCustomList<DealerResource>({
+    resource: "/api/accounts/dealer",
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+    ...props,
+  });
+};
+```
+
+#### Usage
+
+```tsx
+const { customData } = useDealerList();
+
+return (
+    <ul>
+        {(customData.data ?? []).map(dealer => (
+            <li key={dealer.id}>
+                {dealer.first_name} {dealer.last_name}
+            </li>
+        ))}
+    </ul>
+);
+```
+
+### GET One Method
+
+```ts
+export const useDealerData = (id: string) => {
+  return useCustomOne<DealerResource>({
+    resource: "/api/accounts/dealer",
+    id: id,
+  });
+};
+```
+
+#### Usage
+
+```tsx
+const { customData } = useDealerData();
+
+return (
+    <div className="flex flex-col gap-2">
+        <p>
+            <strong>First Name: </strong> {customData.data.first_name}
+        </p>
+        <p>
+            <strong>Last Name: </strong> {customData.data.last_name}
+        </p>
+        <p>
+            <strong>Username: </strong> {customData.data.username}
+        </p>
+        <p>
+            <strong>Email: </strong> {customData.data.email}
+        </p>
+    </div>
+);
 ```
 
 ## Learn More
