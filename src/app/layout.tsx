@@ -10,8 +10,6 @@ import { authProvider } from "@providers/auth-provider";
 import { dataProvider } from "@providers/data-provider";
 import Providers from "@providers/providers";
 import "@styles/index.scss";
-import "simplebar-react/dist/simplebar.min.css";
-import "flatpickr/dist/themes/light.css";
 
 const font = Poppins({
     preload: false,
