@@ -183,6 +183,12 @@ const onDelete = () => {
 ### GET Method
 
 ```ts
+type useDealerListProps = UseListProps<
+  DealerResource,
+  HttpError,
+  DealerResource
+>;
+
 export const useDealerList = (props?: useDealerListProps) => {
   return useCustomList<DealerResource>({
     resource: "/api/accounts/dealer",
@@ -198,7 +204,16 @@ export const useDealerList = (props?: useDealerListProps) => {
 #### Usage
 
 ```tsx
-const { customData } = useDealerList();
+const { customData } = useDealerList({
+    // For Other Query Parameters
+    filters: [
+        {
+            field: "status",
+            operator: "eq",
+            value: "active"
+        }
+    ]
+});
 
 return (
     <ul>
