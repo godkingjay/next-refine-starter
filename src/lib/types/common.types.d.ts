@@ -1,4 +1,4 @@
 export type KeyValueSearchParameter = {
-    key: string;
-    value: any;
+  key: string;
+  value: any;
 };

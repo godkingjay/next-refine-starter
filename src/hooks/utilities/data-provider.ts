@@ -1,4 +1,5 @@
 import {
+  BaseApiDataResponse,
   HandleMutate,
   HandleMutateDelete,
   HandleMutateUpdate,
@@ -111,7 +112,19 @@ export const useCustomList = <
       pageSize: perPage,
       current: currentPage,
     },
-    filters: filterOptions,
+    filters: [
+      ...(filterOptions ?? []),
+      {
+        field: "items",
+        operator: "eq",
+        value: perPage.toString(),
+      },
+      {
+        field: "page",
+        operator: "eq",
+        value: currentPage.toString(),
+      },
+    ],
     ...props,
   });
 
@@ -139,7 +152,7 @@ export const useCustomOne = <
     ...props,
   });
 
-  const customData = data?.data?.data as unknown as TData;
+  const customData = data?.data as unknown as BaseApiDataResponse<TData>;
 
   return { customData, ...dataProps };
 };
