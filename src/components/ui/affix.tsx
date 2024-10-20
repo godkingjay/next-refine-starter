@@ -25,6 +25,7 @@ const Affix = ({ children, offsetTop, target }: AffixProps) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offsetTop]);
 
   const affixStyles: React.CSSProperties = {

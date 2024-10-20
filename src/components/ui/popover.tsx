@@ -19,7 +19,7 @@ const PopoverContent = React.forwardRef<
       sideOffset={sideOffset}
       className={cn(
         "z-[999] w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-        className
+        className,
       )}
       {...props}
     />
@@ -60,6 +60,7 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
     return () => {
       document?.removeEventListener("click", handleClickOutside);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onClose]);
 
   return (
@@ -68,8 +69,8 @@ const CustomPopover: React.FC<CustomPopoverProps> = ({
       {open && (
         <div
           className={cn(
-            "custom-popover-container border-default-200 divide-default-100 absolute left-0 z-[999] w-56 divide-y rounded-md border bg-popover shadow-lg focus:outline-none",
-            className
+            "custom-popover-container absolute left-0 z-[999] w-56 divide-y divide-default-100 rounded-md border border-default-200 bg-popover shadow-lg focus:outline-none",
+            className,
           )}
         >
           {children}
