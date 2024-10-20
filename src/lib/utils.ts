@@ -8,7 +8,7 @@ import { twMerge } from "tailwind-merge";
  * @returns {string} - The merged classnames
  */
 export const cn = (...inputs: ClassValue[]) => {
-    return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs));
 };
 
 /**
@@ -20,16 +20,16 @@ export const cn = (...inputs: ClassValue[]) => {
  * @returns {string} - The HEX color code
  */
 export const RGBToHex = (r: number, g: number, b: number): string => {
-    const componentToHex = (c: number): string => {
-        const hex = c.toString(16);
-        return hex.length === 1 ? "0" + hex : hex;
-    };
+  const componentToHex = (c: number): string => {
+    const hex = c.toString(16);
+    return hex.length === 1 ? "0" + hex : hex;
+  };
 
-    const redHex: string = componentToHex(r);
-    const greenHex: string = componentToHex(g);
-    const blueHex: string = componentToHex(b);
+  const redHex: string = componentToHex(r);
+  const greenHex: string = componentToHex(g);
+  const blueHex: string = componentToHex(b);
 
-    return "#" + redHex + greenHex + blueHex;
+  return "#" + redHex + greenHex + blueHex;
 };
 
 /**
@@ -40,75 +40,75 @@ export const RGBToHex = (r: number, g: number, b: number): string => {
  * @throws {Error} - Throws an error if the HEX color code is invalid
  */
 export function hslToHex(hsl: string): string {
-    // Remove "hsla(" and ")" from the HSL string
-    let hslValues = hsl.replace("hsla(", "").replace(")", "");
+  // Remove "hsla(" and ")" from the HSL string
+  let hslValues = hsl.replace("hsla(", "").replace(")", "");
 
-    // Split the HSL string into an array of H, S, and L values
-    const [h, s, l] = hslValues.split(" ").map((value) => {
-        if (value.endsWith("%")) {
-            // Remove the "%" sign and parse as a float
-            return parseFloat(value.slice(0, -1));
-        } else {
-            // Parse as an integer
-            return parseInt(value);
-        }
-    });
+  // Split the HSL string into an array of H, S, and L values
+  const [h, s, l] = hslValues.split(" ").map((value) => {
+    if (value.endsWith("%")) {
+      // Remove the "%" sign and parse as a float
+      return parseFloat(value.slice(0, -1));
+    } else {
+      // Parse as an integer
+      return parseInt(value);
+    }
+  });
 
-    // Function to convert HSL to RGB
-    function hslToRgb(h: number, s: number, l: number): string {
-        h /= 360;
-        s /= 100;
-        l /= 100;
+  // Function to convert HSL to RGB
+  function hslToRgb(h: number, s: number, l: number): string {
+    h /= 360;
+    s /= 100;
+    l /= 100;
 
-        let r, g, b;
+    let r, g, b;
 
-        if (s === 0) {
-            r = g = b = l;
-        } else {
-            const hue2rgb = (p: number, q: number, t: number): number => {
-                if (t < 0) t += 1;
-                if (t > 1) t -= 1;
-                if (t < 1 / 6) return p + (q - p) * 6 * t;
-                if (t < 1 / 2) return q;
-                if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-                return p;
-            };
+    if (s === 0) {
+      r = g = b = l;
+    } else {
+      const hue2rgb = (p: number, q: number, t: number): number => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+      };
 
-            const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-            const p = 2 * l - q;
-            r = hue2rgb(p, q, h + 1 / 3);
-            g = hue2rgb(p, q, h);
-            b = hue2rgb(p, q, h - 1 / 3);
-        }
-
-        // Convert RGB values to integers
-        const rInt = Math.round(r * 255);
-        const gInt = Math.round(g * 255);
-        const bInt = Math.round(b * 255);
-
-        // Convert RGB values to a hex color code
-        const rgbToHex = (value: number): string => {
-            const hex = value.toString(16);
-            return hex.length === 1 ? "0" + hex : hex;
-        };
-
-        return `#${rgbToHex(rInt)}${rgbToHex(gInt)}${rgbToHex(bInt)}`;
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1 / 3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1 / 3);
     }
 
-    // Call the hslToRgb function and return the hex color code
-    return hslToRgb(h, s, l);
+    // Convert RGB values to integers
+    const rInt = Math.round(r * 255);
+    const gInt = Math.round(g * 255);
+    const bInt = Math.round(b * 255);
+
+    // Convert RGB values to a hex color code
+    const rgbToHex = (value: number): string => {
+      const hex = value.toString(16);
+      return hex.length === 1 ? "0" + hex : hex;
+    };
+
+    return `#${rgbToHex(rInt)}${rgbToHex(gInt)}${rgbToHex(bInt)}`;
+  }
+
+  // Call the hslToRgb function and return the hex color code
+  return hslToRgb(h, s, l);
 }
 
 export const hexToRGB = (hex: string, alpha?: number): string => {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
 
-    if (alpha) {
-        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    } else {
-        return `rgb(${r}, ${g}, ${b})`;
-    }
+  if (alpha) {
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  } else {
+    return `rgb(${r}, ${g}, ${b})`;
+  }
 };
 
 /**
@@ -118,12 +118,12 @@ export const hexToRGB = (hex: string, alpha?: number): string => {
  * @return {boolean} - Returns true if the values are empty
  */
 export const isEmpty = (...args: any[]): boolean => {
-    return args.every((value) => {
-        if (typeof value === "string") return value.trim().length === 0;
-        if (value instanceof Array) return value.length === 0;
-        if (value instanceof Object) return Object.keys(value).length === 0;
-        return value === undefined || value === null;
-    });
+  return args.every((value) => {
+    if (typeof value === "string") return value.trim().length === 0;
+    if (value instanceof Array) return value.length === 0;
+    if (value instanceof Object) return Object.keys(value).length === 0;
+    return value === undefined || value === null;
+  });
 };
 
 /**
@@ -133,7 +133,7 @@ export const isEmpty = (...args: any[]): boolean => {
  * @return {boolean} - Returns true if the values are not empty
  */
 export const isNotEmpty = (...args: any[]): boolean => {
-    return !isEmpty(...args);
+  return !isEmpty(...args);
 };
 
 /**
@@ -143,7 +143,7 @@ export const isNotEmpty = (...args: any[]): boolean => {
  * @return {boolean} - Returns true if the value is a number
  */
 export const isNumber = (value: any): boolean => {
-    return !isNaN(value);
+  return !isNaN(value);
 };
 
 /**
@@ -153,11 +153,11 @@ export const isNumber = (value: any): boolean => {
  * @param {Function} callback - The callback function
  */
 export const times = (n: number, callback: Function, delay: number = 0) => {
-    for (let i = 0; i < n; i++) {
-        setTimeout(() => {
-            callback();
-        }, i * delay);
-    }
+  for (let i = 0; i < n; i++) {
+    setTimeout(() => {
+      callback();
+    }, i * delay);
+  }
 };
 
 /**
@@ -166,8 +166,8 @@ export const times = (n: number, callback: Function, delay: number = 0) => {
  * @param {number} ms - The time to wait in milliseconds
  */
 export const wait = async (ms: number = 1000, callback?: Function) => {
-    await new Promise((resolve) => setTimeout(resolve, ms));
-    if (callback) callback();
+  await new Promise((resolve) => setTimeout(resolve, ms));
+  if (callback) return callback();
 };
 
 /**
@@ -177,10 +177,10 @@ export const wait = async (ms: number = 1000, callback?: Function) => {
  * @param {(string | number | boolean | undefined | null)[]} args - The values to concatenate
  */
 export const concatenate = (
-    join: string = " ",
-    ...args: (string | number | boolean | undefined | null)[]
+  join: string = " ",
+  ...args: (string | number | boolean | undefined | null)[]
 ): string => {
-    return args.filter((arg) => isNotEmpty(arg)).join(join);
+  return args.filter((arg) => isNotEmpty(arg)).join(join);
 };
 
 /**
@@ -191,7 +191,7 @@ export const concatenate = (
  * @return {boolean} - Returns true if the value is in the array
  */
 export const isIn = (value: any, array: any[]): boolean => {
-    return array.includes(value);
+  return array.includes(value);
 };
 
 /**
@@ -202,7 +202,7 @@ export const isIn = (value: any, array: any[]): boolean => {
  * @return {boolean} - Returns true if the value is not in the array
  */
 export const isNotIn = (value: any, array: any[]): boolean => {
-    return !isIn(value, array);
+  return !isIn(value, array);
 };
 
 /**
@@ -212,20 +212,20 @@ export const isNotIn = (value: any, array: any[]): boolean => {
  * @param {Function} callback - The callback function
  */
 export const repeatOnError = async (n: number, callback: Function) => {
-    let error = null;
-    for (let i = 0; i < n; i++) {
-        try {
-            await callback();
-            error = null;
-            break;
-        } catch (e) {
-            error = e;
-        }
+  let error = null;
+  for (let i = 0; i < n; i++) {
+    try {
+      await callback();
+      error = null;
+      break;
+    } catch (e) {
+      error = e;
     }
+  }
 
-    if (error) {
-        throw error;
-    }
+  if (error) {
+    throw error;
+  }
 };
 
 /**
@@ -236,30 +236,30 @@ export const repeatOnError = async (n: number, callback: Function) => {
  * @param {number} delay - The delay in milliseconds
  */
 export const debounce = (callback: Function, delay: number = 1000) => {
-    // Declare a variable called 'timer' to store the timer ID
-    let timer: NodeJS.Timeout;
+  // Declare a variable called 'timer' to store the timer ID
+  let timer: NodeJS.Timeout;
 
-    // Return an anonymous function that takes in any number of arguments
-    return function (...args: any[]) {
-        // Clear the previous timer to prevent the execution of 'callback'
-        clearTimeout(timer);
+  // Return an anonymous function that takes in any number of arguments
+  return function (...args: any[]) {
+    // Clear the previous timer to prevent the execution of 'callback'
+    clearTimeout(timer);
 
-        // Set a new timer that will execute 'callback' after the specified delay
-        timer = setTimeout(() => {
-            callback(...args);
-        }, delay);
-    };
+    // Set a new timer that will execute 'callback' after the specified delay
+    timer = setTimeout(() => {
+      callback(...args);
+    }, delay);
+  };
 };
 
 /**
  * returnDoIf
  */
 export const doIfReturn = (condition: boolean, callback: Function) => {
-    if (condition) {
-        return callback();
-    } else {
-        return undefined;
-    }
+  if (condition) {
+    return callback();
+  } else {
+    return undefined;
+  }
 };
 
 /**
@@ -270,14 +270,14 @@ export const doIfReturn = (condition: boolean, callback: Function) => {
  * @param {keyof T} keys - The keys to check
  */
 export const nullifyInvalidObject = <T extends unknown>(
-    item: T,
-    keys: (keyof T)[]
+  item: T,
+  keys: (keyof T)[],
 ): T | null => {
-    const invalidKeys = keys.filter((key) => isEmpty(item[key]));
-    if (invalidKeys.length === 0) {
-        return item;
-    }
-    return null;
+  const invalidKeys = keys.filter((key) => isEmpty(item[key]));
+  if (invalidKeys.length === 0) {
+    return item;
+  }
+  return null;
 };
 
 /**
@@ -290,16 +290,16 @@ export const nullifyInvalidObject = <T extends unknown>(
  * @returns {T[]} - The reduced array of objects
  */
 export const reduceInvalidObjects = <T extends unknown>(
-    items: T[],
-    keys: (keyof T)[]
+  items: T[],
+  keys: (keyof T)[],
 ): T[] => {
-    return items.reduce((acc, item) => {
-        const invalidKeys = keys.filter((key) => isEmpty(item[key]));
-        if (invalidKeys.length === 0) {
-            acc.push(item);
-        }
-        return acc;
-    }, [] as T[]);
+  return items.reduce((acc, item) => {
+    const invalidKeys = keys.filter((key) => isEmpty(item[key]));
+    if (invalidKeys.length === 0) {
+      acc.push(item);
+    }
+    return acc;
+  }, [] as T[]);
 };
 
 /**
@@ -307,17 +307,17 @@ export const reduceInvalidObjects = <T extends unknown>(
  * with keys replaced by the specified transform object
  */
 export const reduceTransformObjects = <T extends Record<string, unknown>, U>(
-    items: T[],
-    transform: { [key in keyof Partial<T>]: U }
+  items: T[],
+  transform: { [key in keyof Partial<T>]: U },
 ) => {
-    return items.map((item) => {
-        const newItem: T = {} as any;
-        (Object.keys(item) as (keyof T)[]).forEach((key) => {
-            const newKey = transform[key] ?? (key as keyof T);
-            newItem[newKey as keyof T] = item[key];
-        });
-        return newItem;
-    }) as any[];
+  return items.map((item) => {
+    const newItem: T = {} as any;
+    (Object.keys(item) as (keyof T)[]).forEach((key) => {
+      const newKey = transform[key] ?? (key as keyof T);
+      newItem[newKey as keyof T] = item[key];
+    });
+    return newItem;
+  }) as any[];
 };
 
 /**
@@ -328,7 +328,7 @@ export const reduceTransformObjects = <T extends Record<string, unknown>, U>(
  * @returns The clamped value.
  */
 export const minMax = (value: number, min: number, max: number) => {
-    return Math.min(Math.max(value, min), max);
+  return Math.min(Math.max(value, min), max);
 };
 
 /**
@@ -339,7 +339,7 @@ export const minMax = (value: number, min: number, max: number) => {
  * @returns A random number between the minimum and maximum values.
  */
 const randomNumber = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 /**
@@ -351,14 +351,14 @@ const randomNumber = (min: number, max: number) => {
  * @returns {Point[]} - The generated random points
  */
 export const randomPoints = (
-    points: number,
-    min: number = 0,
-    max: number = 100
+  points: number,
+  min: number = 0,
+  max: number = 100,
 ) => {
-    return Array.from({ length: points }).map((_) => ({
-        x: Math.floor(Math.random() * (max - min + 1) + min),
-        y: Math.floor(Math.random() * (max - min + 1) + min),
-    }));
+  return Array.from({ length: points }).map((_) => ({
+    x: Math.floor(Math.random() * (max - min + 1) + min),
+    y: Math.floor(Math.random() * (max - min + 1) + min),
+  }));
 };
 
 /**
@@ -368,7 +368,7 @@ export const randomPoints = (
  * @returns {T} - The random value
  */
 export const randomFromList = <T extends unknown>(list: T[]): T => {
-    return list[Math.floor(Math.random() * list.length)];
+  return list[Math.floor(Math.random() * list.length)];
 };
 
 /**
@@ -378,11 +378,11 @@ export const randomFromList = <T extends unknown>(list: T[]): T => {
  * @returns {T[keyof T]} - The random value
  */
 export const randomFromObject = <T extends Record<string, unknown>>(
-    object: T
+  object: T,
 ): T[keyof T] => {
-    const keys = Object.keys(object);
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
-    return object[randomKey as keyof T];
+  const keys = Object.keys(object);
+  const randomKey = keys[Math.floor(Math.random() * keys.length)];
+  return object[randomKey as keyof T];
 };
 
 /**
@@ -393,7 +393,7 @@ export const randomFromObject = <T extends Record<string, unknown>>(
  * @returns {number} - The random value
  */
 export const randomFromRange = (min: number, max: number): number => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 /**
@@ -403,8 +403,8 @@ export const randomFromRange = (min: number, max: number): number => {
  * @returns {T} - The random value
  */
 export const randomFromMatrix = <T extends unknown>(matrix: T[][]): T => {
-    const randomRow = matrix[Math.floor(Math.random() * matrix.length)];
-    return randomRow[Math.floor(Math.random() * randomRow.length)];
+  const randomRow = matrix[Math.floor(Math.random() * matrix.length)];
+  return randomRow[Math.floor(Math.random() * randomRow.length)];
 };
 
 /**
@@ -414,8 +414,8 @@ export const randomFromMatrix = <T extends unknown>(matrix: T[][]): T => {
  * @returns {T} - The random value
  */
 export const randomFromSet = <T extends unknown>(set: Set<T>): T => {
-    const randomIndex = Math.floor(Math.random() * set.size);
-    return Array.from(set)[randomIndex];
+  const randomIndex = Math.floor(Math.random() * set.size);
+  return Array.from(set)[randomIndex];
 };
 
 /**
@@ -425,8 +425,8 @@ export const randomFromSet = <T extends unknown>(set: Set<T>): T => {
  * @returns {V} - The random value
  */
 export const randomFromMap = <K, V>(map: Map<K, V>): V => {
-    const randomIndex = Math.floor(Math.random() * map.size);
-    return Array.from(map.values())[randomIndex];
+  const randomIndex = Math.floor(Math.random() * map.size);
+  return Array.from(map.values())[randomIndex];
 };
 
 /**
@@ -436,7 +436,7 @@ export const randomFromMap = <K, V>(map: Map<K, V>): V => {
  * @returns {T} - The random value
  */
 export const randomFromTuple = <T extends unknown>(tuple: [T, ...T[]]): T => {
-    return tuple[Math.floor(Math.random() * tuple.length)];
+  return tuple[Math.floor(Math.random() * tuple.length)];
 };
 
 /**
@@ -446,7 +446,7 @@ export const randomFromTuple = <T extends unknown>(tuple: [T, ...T[]]): T => {
  * @returns The first not empty value
  */
 export const firstNotEmptyFromValues = <T extends unknown>(
-    ...args: T[]
+  ...args: T[]
 ): T | undefined => {
-    return args.find((value) => isNotEmpty(value));
+  return args.find((value) => isNotEmpty(value));
 };
