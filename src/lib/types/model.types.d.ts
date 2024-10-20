@@ -1,3 +1,9 @@
+type ExampleResource = {
+  id: number;
+  name: string;
+  description: string;
+};
+
 type UserResource = {
   id: string | number;
   first_name: string;
