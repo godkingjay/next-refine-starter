@@ -70,7 +70,6 @@ const AuthLogin = (props: AuthLoginProps) => {
           <div className="mt-2 text-base leading-6 text-default-600 2xl:text-lg">
             Enter the information you entered while registering.
           </div>
-
           <form onSubmit={onSubmit} className="mt-8 2xl:mt-7">
             <div className="relative">
               <Input
@@ -148,7 +147,7 @@ const AuthLogin = (props: AuthLoginProps) => {
                 </Label>
               </div>
               <Link href="#" className="flex-none text-sm text-primary">
-                Forget Password?
+                Forgot Password?
               </Link>
             </div>
             <Button className="mt-5 w-full" disabled={isLoading}>
