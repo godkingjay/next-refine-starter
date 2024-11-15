@@ -450,3 +450,37 @@ export const firstNotEmptyFromValues = <T extends unknown>(
 ): T | undefined => {
   return args.find((value) => isNotEmpty(value));
 };
+
+/**
+ * Returns a fallback value if the specified value is empty
+ *
+ * @param value - The value to check
+ * @param fallback - The fallback value
+ * @returns The value or the fallback value
+ */
+export const fallbackValueIfEmpty = <
+  T extends unknown,
+  U extends unknown = undefined,
+>(
+  value: T,
+  fallback: U,
+): T | U => {
+  return isNotEmpty(value) ? value : fallback;
+};
+
+/**
+ * Returns a fallback value if the specified value is not empty
+ *
+ * @param value - The value to check
+ * @param fallback - The fallback value
+ * @returns The value or the fallback value
+ */
+export const fallbackValueIfNotEmpty = <
+  T extends unknown,
+  U extends unknown = undefined,
+>(
+  value: T,
+  fallback: U,
+): T | U => {
+  return isNotEmpty(value) ? fallback : value;
+};

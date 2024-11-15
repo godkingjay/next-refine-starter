@@ -35,7 +35,7 @@ Refine's hooks and components simplifies the development process and eliminates 
     pnpm start
 ```
 
-## Sample API Calls
+<!-- ## Sample API Calls
 
 ### POST Method
 
@@ -258,7 +258,7 @@ return (
         </p>
     </div>
 );
-```
+``` -->
 
 ## Learn More
 

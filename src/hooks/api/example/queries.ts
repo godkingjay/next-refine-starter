@@ -1,12 +1,14 @@
-import { useCustomList, useCustomOne } from "@hooks/utilities";
-import { HttpError, UseListProps } from "@refinedev/core";
+import {
+  useCustomList,
+  UseCustomListProps,
+  useCustomOne,
+  UseCustomOneProps,
+} from "@hooks/utilities";
 
-type UseExampleListProps<T> = UseListProps<T, HttpError, T>;
-
-export const useExampleList = (
-  props?: UseExampleListProps<ExampleResource>,
+export const useExampleList = <T extends ExampleResource>(
+  props?: UseCustomListProps<T>,
 ) => {
-  return useCustomList<ExampleResource>({
+  return useCustomList<T>({
     resource: "/api/examples",
     pagination: {
       current: 1,
@@ -16,9 +18,13 @@ export const useExampleList = (
   });
 };
 
-export const useExampleData = (id: string) => {
-  return useCustomOne<ExampleResource>({
+export const useExampleData = <T extends ExampleResource>(
+  id: string,
+  props?: UseCustomOneProps<T>,
+) => {
+  return useCustomOne<T>({
     resource: `/api/examples/${id}`,
     id: id,
+    ...props,
   });
 };

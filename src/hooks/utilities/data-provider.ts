@@ -1,5 +1,6 @@
 import {
   BaseApiDataResponse,
+  BaseApiErrorResponse,
   HandleMutate,
   HandleMutateDelete,
   HandleMutateUpdate,
@@ -12,31 +13,49 @@ import {
   CrudFilter,
   HttpError,
   useCreate,
+  UseCreateProps,
   useDelete,
+  UseDeleteProps,
   useGetIdentity,
   useList,
   UseListProps,
   useOne,
   UseOneProps,
   useUpdate,
+  UseUpdateProps,
 } from "@refinedev/core";
 import { useState } from "react";
 
-export const useCustomCreate = <P extends {}, R extends BaseRecord, E>(
-  resource: string,
-) => {
-  const { mutate, ...others } = useCreate<R, HandleError<E>>();
+type UseCustomCreateProps<
+  TVariables extends BaseRecord = BaseRecord,
+  TData extends BaseRecord = TVariables,
+  TError extends HttpError = BaseApiErrorResponse,
+> = UseCreateProps<TData, TError, TVariables>;
 
-  const handleMutate: HandleMutate<P, R, HandleError<E>> = async (
-    payload,
-    options,
-  ) => {
+export const useCustomCreate = <
+  TVariables extends BaseRecord = BaseRecord,
+  TData extends BaseRecord = TVariables,
+  TError extends HttpError = HttpError,
+>({
+  resource,
+  ...props
+}: UseCustomCreateProps<TVariables, TData, TError>) => {
+  const { mutate, ...others } = useCreate<TData, HandleError<TError>>({
+    resource,
+  });
+
+  const handleMutate: HandleMutate<
+    TVariables,
+    TData,
+    HandleError<TError>
+  > = async (payload, options) => {
     mutate(
       {
         resource: resource,
         values: payload,
       },
       {
+        ...props,
         ...options,
       },
     );
@@ -45,16 +64,27 @@ export const useCustomCreate = <P extends {}, R extends BaseRecord, E>(
   return { handleMutate, ...others };
 };
 
-export const useCustomUpdate = <P extends {}, R extends BaseRecord, E>(
-  resource: string,
-) => {
-  const { mutate, ...others } = useUpdate<R, HandleError<E>>();
+type UseCustomUpdateProps<
+  TVariables extends BaseRecord = BaseRecord,
+  TData extends BaseRecord = TVariables,
+  TError extends HttpError = BaseApiErrorResponse,
+> = UseUpdateProps<TData, TError, TVariables>;
 
-  const handleMutate: HandleMutateUpdate<P, R, HandleError<E>> = async (
-    id,
-    payload,
-    options,
-  ) => {
+export const useCustomUpdate = <
+  TVariables extends BaseRecord = BaseRecord,
+  TData extends BaseRecord = TVariables,
+  TError extends HttpError = HttpError,
+>({
+  resource,
+  ...props
+}: UseCustomUpdateProps<TVariables, TData, TError>) => {
+  const { mutate, ...others } = useUpdate<TData, HandleError<TError>>();
+
+  const handleMutate: HandleMutateUpdate<
+    TVariables,
+    TData,
+    HandleError<TError>
+  > = async (id, payload, options) => {
     mutate(
       {
         resource: resource,
@@ -62,6 +92,7 @@ export const useCustomUpdate = <P extends {}, R extends BaseRecord, E>(
         id: id ?? "",
       },
       {
+        ...props,
         ...options,
       },
     );
@@ -70,19 +101,36 @@ export const useCustomUpdate = <P extends {}, R extends BaseRecord, E>(
   return { handleMutate, ...others };
 };
 
-export const useCustomDelete = <R extends BaseRecord, E>(resource: string) => {
-  const { mutate, ...others } = useDelete<R, HandleError<E>>();
+type UseCustomDeleteProps<
+  TVariables extends BaseRecord = BaseRecord,
+  TError extends HttpError = BaseApiErrorResponse,
+> = UseDeleteProps<TVariables, TError, TVariables> & {
+  id?: string | number;
+  resource: string;
+};
 
-  const handleMutate: HandleMutateDelete<R, HandleError<E>> = async (
-    id,
-    options,
-  ) => {
+export const useCustomDelete = <
+  TVariables extends BaseRecord = BaseRecord,
+  TError extends HttpError = BaseApiErrorResponse,
+>({
+  id: _id = "",
+  resource,
+  ...props
+}: UseCustomDeleteProps<TVariables, TError>) => {
+  const { mutate, ...others } = useDelete<TVariables, HandleError<TError>>();
+
+  const handleMutate: HandleMutateDelete<
+    TVariables,
+    HandleError<TError>
+  > = async (id, options) => {
     mutate(
       {
+        id: id || _id,
         resource: resource,
-        id: id ?? "",
+        ...props,
       },
       {
+        ...props,
         ...options,
       },
     );
@@ -90,6 +138,12 @@ export const useCustomDelete = <R extends BaseRecord, E>(resource: string) => {
 
   return { handleMutate, ...others };
 };
+
+export type UseCustomListProps<
+  TQueryFnData,
+  TError = HttpError,
+  TData = TQueryFnData,
+> = UseListProps<TQueryFnData, TError, TData>;
 
 export const useCustomList = <
   TQueryFnData extends BaseRecord = BaseRecord,
@@ -99,9 +153,9 @@ export const useCustomList = <
   resource,
   pagination,
   ...props
-}: UseListProps<TQueryFnData, TError, TData> = {}) => {
-  const [perPage, setPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+}: UseCustomListProps<TQueryFnData, TError, TData> = {}) => {
+  const [currentPage, setCurrentPage] = useState(pagination?.current || 1);
+  const [perPage, setPerPage] = useState(pagination?.pageSize || 10);
   const [filterOptions, setFilterOptions] = useState<CrudFilter[] | undefined>(
     [],
   );
@@ -112,19 +166,6 @@ export const useCustomList = <
       pageSize: perPage,
       current: currentPage,
     },
-    filters: [
-      ...(filterOptions ?? []),
-      {
-        field: "items",
-        operator: "eq",
-        value: perPage.toString(),
-      },
-      {
-        field: "page",
-        operator: "eq",
-        value: currentPage.toString(),
-      },
-    ],
     ...props,
   });
 
@@ -142,11 +183,20 @@ export const useCustomList = <
   };
 };
 
+export type UseCustomOneProps<
+  TQueryFnData,
+  TError = HttpError,
+  TData = TQueryFnData,
+> = UseOneProps<TQueryFnData, TError, TData>;
+
 export const useCustomOne = <
   TQueryFnData extends BaseRecord = BaseRecord,
   TError extends HttpError = HttpError,
   TData extends BaseRecord = TQueryFnData,
->({ resource, ...props }: UseOneProps<TQueryFnData, TError, TData> = {}) => {
+>({
+  resource,
+  ...props
+}: UseCustomOneProps<TQueryFnData, TError, TData> = {}) => {
   const { data, ...dataProps } = useOne<TQueryFnData, TError, TData>({
     resource,
     ...props,

@@ -13,24 +13,28 @@ import {
   UpdateExampleResponse,
 } from "./types";
 
-export const useExampleCreate = () => {
-  return useCustomCreate<
-    CreateExamplePayload,
-    CreateExampleResponse,
-    BaseApiErrorResponse
-  >("/api/examples");
+export const useExampleCreate = <
+  Payload extends CreateExamplePayload,
+  Response extends CreateExampleResponse,
+  Error extends BaseApiErrorResponse,
+>() => {
+  return useCustomCreate<Payload, Response, Error>({
+    resource: "/api/examples",
+  });
 };
 
-export const useExampleUpdate = () => {
-  return useCustomUpdate<
-    UpdateExamplePayload,
-    UpdateExampleResponse,
-    BaseApiErrorResponse
-  >("/api/examples");
+export const useExampleUpdate = <
+  Payload extends UpdateExamplePayload,
+  Response extends UpdateExampleResponse,
+  Error extends BaseApiErrorResponse,
+>() => {
+  return useCustomUpdate<Payload, Response, Error>({
+    resource: "/api/examples",
+  });
 };
 
 export const useExampleDelete = () => {
-  return useCustomDelete<DeleteExampleResponse, DeleteExampleError>(
-    "/api/examples",
-  );
+  return useCustomDelete<DeleteExampleResponse, DeleteExampleError>({
+    resource: "/api/examples",
+  });
 };

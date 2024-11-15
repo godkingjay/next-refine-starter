@@ -1,3 +1,5 @@
+import { HttpError } from "@refinedev/core";
+
 export type CreateExamplePayload = {
   name: string;
   description: string;
@@ -34,7 +36,7 @@ export type DeleteExampleResponse = {
   message: string;
 };
 
-export type DeleteExampleError = {
+export type DeleteExampleError = HttpError & {
   status: string;
   message: string;
 };

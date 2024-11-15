@@ -22,6 +22,7 @@ export type HandleMutateDelete<R, E> = (
 ) => void;
 
 export type BaseApiErrorResponse = {
+  statusCode: number;
   message: string;
 };
 
