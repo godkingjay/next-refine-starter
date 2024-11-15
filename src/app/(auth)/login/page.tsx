@@ -1,5 +1,3 @@
-// import auth3Dark from "@public/images/auth/auth3-dark.png";
-// import auth3Light from "@public/images/auth/auth3-light.png";
 import { AuthPage } from "@components/auth-page";
 import { authProviderServer } from "@providers/auth-provider";
 import Image from "next/image";

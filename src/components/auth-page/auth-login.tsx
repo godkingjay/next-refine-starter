@@ -79,9 +79,8 @@ const AuthLogin = (props: AuthLoginProps) => {
                 id="email"
                 name="email"
                 size={!isDesktop2xl ? "xl" : "lg"}
-                placeholder="Email"
+                placeholder="admin@admin.com"
                 disabled={isLoading}
-                className={cn("peer")}
               />
               <Label
                 htmlFor="email"
@@ -105,7 +104,6 @@ const AuthLogin = (props: AuthLoginProps) => {
                 size={!isDesktop2xl ? "xl" : "lg"}
                 placeholder="Password"
                 disabled={isLoading}
-                className={cn("peer")}
               />
               <Label
                 htmlFor="password"
