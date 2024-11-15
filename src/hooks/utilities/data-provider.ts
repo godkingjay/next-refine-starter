@@ -6,12 +6,14 @@ import {
   HandleMutateUpdate,
 } from "@hooks/types";
 import { HandleError } from "@hooks/types/errors";
+import { concatenate } from "@lib";
 import { CustomPaginator } from "@lib/types";
 import { LoginResponse } from "@providers/auth-provider/types";
 import {
   BaseRecord,
   CrudFilter,
   HttpError,
+  LogicalFilter,
   useCreate,
   UseCreateProps,
   useDelete,
@@ -30,7 +32,9 @@ type UseCustomCreateProps<
   TVariables extends BaseRecord = BaseRecord,
   TData extends BaseRecord = TVariables,
   TError extends HttpError = BaseApiErrorResponse,
-> = UseCreateProps<TData, TError, TVariables>;
+> = UseCreateProps<TData, TError, TVariables> & {
+  params?: LogicalFilter[];
+};
 
 export const useCustomCreate = <
   TVariables extends BaseRecord = BaseRecord,
@@ -38,6 +42,7 @@ export const useCustomCreate = <
   TError extends HttpError = HttpError,
 >({
   resource,
+  params = [],
   ...props
 }: UseCustomCreateProps<TVariables, TData, TError>) => {
   const { mutate, ...others } = useCreate<TData, HandleError<TError>>({
@@ -51,7 +56,15 @@ export const useCustomCreate = <
   > = async (payload, options) => {
     mutate(
       {
-        resource: resource,
+        resource: concatenate(
+          "?",
+          resource,
+          concatenate(
+            "&",
+            "method=POST",
+            ...params.map((param) => `${param.field}=${param.value}`),
+          ),
+        ),
         values: payload,
       },
       {
@@ -68,7 +81,9 @@ type UseCustomUpdateProps<
   TVariables extends BaseRecord = BaseRecord,
   TData extends BaseRecord = TVariables,
   TError extends HttpError = BaseApiErrorResponse,
-> = UseUpdateProps<TData, TError, TVariables>;
+> = UseUpdateProps<TData, TError, TVariables> & {
+  params?: LogicalFilter[];
+};
 
 export const useCustomUpdate = <
   TVariables extends BaseRecord = BaseRecord,
@@ -76,6 +91,7 @@ export const useCustomUpdate = <
   TError extends HttpError = HttpError,
 >({
   resource,
+  params = [],
   ...props
 }: UseCustomUpdateProps<TVariables, TData, TError>) => {
   const { mutate, ...others } = useUpdate<TData, HandleError<TError>>();
@@ -87,7 +103,63 @@ export const useCustomUpdate = <
   > = async (id, payload, options) => {
     mutate(
       {
-        resource: resource,
+        resource: concatenate(
+          "?",
+          resource,
+          concatenate(
+            "&",
+            "method=PUT",
+            ...params.map((param) => `${param.field}=${param.value}`),
+          ),
+        ),
+        values: payload,
+        id: id ?? "",
+      },
+      {
+        ...props,
+        ...options,
+      },
+    );
+  };
+
+  return { handleMutate, ...others };
+};
+
+type UseCustomPatchProps<
+  TVariables extends BaseRecord = BaseRecord,
+  TData extends BaseRecord = TVariables,
+  TError extends HttpError = BaseApiErrorResponse,
+> = UseUpdateProps<TData, TError, TVariables> & {
+  params?: LogicalFilter[];
+};
+
+export const useCustomPatch = <
+  TVariables extends BaseRecord = BaseRecord,
+  TData extends BaseRecord = TVariables,
+  TError extends HttpError = HttpError,
+>({
+  resource,
+  params = [],
+  ...props
+}: UseCustomPatchProps<TVariables, TData, TError>) => {
+  const { mutate, ...others } = useUpdate<TData, HandleError<TError>>();
+
+  const handleMutate: HandleMutateUpdate<
+    TVariables,
+    TData,
+    HandleError<TError>
+  > = async (id, payload, options) => {
+    mutate(
+      {
+        resource: concatenate(
+          "?",
+          resource,
+          concatenate(
+            "&",
+            "method=PATCH",
+            ...params.map((param) => `${param.field}=${param.value}`),
+          ),
+        ),
         values: payload,
         id: id ?? "",
       },
@@ -107,6 +179,7 @@ type UseCustomDeleteProps<
 > = UseDeleteProps<TVariables, TError, TVariables> & {
   id?: string | number;
   resource: string;
+  params?: LogicalFilter[];
 };
 
 export const useCustomDelete = <
@@ -115,6 +188,7 @@ export const useCustomDelete = <
 >({
   id: _id = "",
   resource,
+  params = [],
   ...props
 }: UseCustomDeleteProps<TVariables, TError>) => {
   const { mutate, ...others } = useDelete<TVariables, HandleError<TError>>();
@@ -126,7 +200,15 @@ export const useCustomDelete = <
     mutate(
       {
         id: id || _id,
-        resource: resource,
+        resource: concatenate(
+          "?",
+          resource,
+          concatenate(
+            "&",
+            "method=DELETE",
+            ...params.map((param) => `${param.field}=${param.value}`),
+          ),
+        ),
         ...props,
       },
       {
@@ -175,7 +257,7 @@ export const useCustomList = <
     customData,
     perPage,
     currentPage,
-    filters: filterOptions,
+    params: filterOptions,
     setPerPage,
     setCurrentPage,
     setFilters: setFilterOptions,
